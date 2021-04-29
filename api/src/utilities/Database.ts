@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-const server = '127.0.0.1:27017';
-const database = 'dacodeaz';
+const server = `${process.env.MONGODB_SERVER}:27017`;
+const database = `${process.env.MONGODB_DATABASE}`;
 
 mongoose
   .connect(`mongodb://${server}/${database}`, {

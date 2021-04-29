@@ -98,7 +98,7 @@ const App = () => {
       {room !== undefined && game !== undefined ? (
         <>
           <ButtonBar>
-            <Title>daCODEaz</Title>
+            <Title>deCODE</Title>
             <Spacer />
             <Button width="115px" onClick={copyRoomCode}>
               {copyCodeText}

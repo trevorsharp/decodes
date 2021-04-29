@@ -54,8 +54,8 @@ const RoomSelection = (props: Props) => {
 
   return (
     <Container>
-      <Title>daCODEaz</Title>
-      <Label>Welcome to daCODEaz!</Label>
+      <Title>deCODE</Title>
+      <Label>Welcome to deCODE!</Label>
       <ToolTip>
         {nameError !== '' && <ToolTipText>{nameError}</ToolTipText>}
         <Entry
