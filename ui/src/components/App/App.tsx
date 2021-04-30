@@ -55,7 +55,7 @@ const App = () => {
   const [copyCodeText, setCopyCodeText] = useState('Copy Code');
 
   const copyRoomCode = () => {
-    // room?.code && navigator.clipboard.writeText(room?.code);
+    room?.code && navigator.clipboard.writeText(room?.code);
     setTimeout(() => setCopyCodeText('Copy Code'), 5000);
     setCopyCodeText('Copied!');
   };

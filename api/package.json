@@ -10,7 +10,7 @@
   "scripts": {
     "build": "rm -rf ./build && tsc --build tsconfig.json",
     "start": "yarn build && node ./build/index.js",
-    "start:dev": "export MONGODB_SERVER=127.0.0.1 && export MONGODB_DATABASE=decodes1 && nodemon"
+    "start:dev": "export MONGODB_SERVER=127.0.0.1 && export MONGODB_DATABASE=decodes1 && export FRONTEND_URL=http://192.168.40.17:3000 && nodemon"
   },
   "devDependencies": {
     "nodemon": "^2.0.7",

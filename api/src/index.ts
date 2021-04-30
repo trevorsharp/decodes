@@ -5,8 +5,9 @@ import GameService from './services/GameService';
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
+  path: '/api',
   cors: {
-    origin: 'http://sharp.casa:3000',
+    origin: `${process.env.FRONTEND_URL}`,
     methods: ['GET', 'POST'],
   },
 });

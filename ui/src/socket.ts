@@ -1,6 +1,8 @@
 import { io } from 'socket.io-client';
 
-const socket = io('http://sharp.casa:3001');
+const socket = io(`${window.location.href.replace(window.location.pathname, '')}`, {
+  path: '/api',
+});
 
 const playerId = `${Math.floor(Math.random() * 1000000000)}`;
 

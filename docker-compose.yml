@@ -10,27 +10,35 @@ services:
     environment:
       - "MONGODB_SERVER=decodes-mongodb"
       - "MONGODB_DATABASE=decodes1"
+      - "FRONTEND_URL=https://decodes.stream"
   decodes-nginx:
     build:
       context: ./ui
     image: trevorsharp/decodes-nginx
     container_name: decodes-nginx
     ports:
-      - 7171:7171
+      - 80:80
+      - 443:443
+    environment:
+      - "DOMAIN=decodes.stream"
+      - "BACKEND_SERVER=decodes-api"
+      - "MONGO_EXPRESS=decodes-mongodb-ui"
+    command: /bin/bash -c "export DOLLAR='$'; envsubst < /app/host.conf > /hosts/host.conf && nginx -g 'daemon off;'"
   decodes-mongodb:
     image: mongo
     container_name: decodes-mongodb
     volumes:
       - /database:/data/db
-    ports:
-      - 27017:27017
+    expose:
+      - "27017"
     restart: unless-stopped
   decodes-mongodb-ui:
     image: mongo-express
     container_name: decodes-mongodb-ui
-    ports:
-      - 8081:8081
+    expose:
+      - "8081"
     environment:
       - "ME_CONFIG_MONGODB_SERVER=decodes-mongodb"
       - "ME_CONFIG_BASICAUTH_USERNAME=sharp"
       - "ME_CONFIG_BASICAUTH_PASSWORD=password"
+      - "ME_CONFIG_SITE_BASEURL=/manage/"
