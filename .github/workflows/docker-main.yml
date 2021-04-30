@@ -41,9 +41,11 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: ./api
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.prep.outputs.tags }}
+
   build-nginx:
     runs-on: ubuntu-latest
     steps:
@@ -80,6 +82,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.prep.outputs.tags }}
