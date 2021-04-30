@@ -9,6 +9,7 @@ COPY ./ui/yarn.lock ./yarn.lock
 RUN yarn
 
 COPY ./ui/src ./src
+COPY ./ui/public ./public
 COPY ./ui/tsconfig.json ./tsconfig.json
 RUN yarn build
 

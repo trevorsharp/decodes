@@ -41,7 +41,6 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: ./api
-          file: ./api/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.prep.outputs.tags }}
@@ -81,7 +80,6 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
-          file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.prep.outputs.tags }}
