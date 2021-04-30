@@ -15,5 +15,6 @@ RUN yarn build
 
 
 FROM nginx:alpine
-ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/mime.types /etc/nginx/mime.types
 COPY --from=builder /app/build /static/app
