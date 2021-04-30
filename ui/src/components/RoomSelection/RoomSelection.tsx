@@ -3,6 +3,7 @@ import {
   Button,
   Entry,
   Label,
+  Text,
   Title,
   Container,
   HideButton,
@@ -16,6 +17,7 @@ import showIcon from '../../images/eye-show.png';
 interface Props {
   joinRoom: (roomCode: string, playerName: string) => void;
   createRoom: (playerName: string) => void;
+  error: string;
 }
 
 const RoomSelection = (props: Props) => {
@@ -52,23 +54,42 @@ const RoomSelection = (props: Props) => {
     props.joinRoom(roomCode, playerName);
   };
 
+  const handlePlayerNameKeyDown = (event: any): void => {
+    var code = event.keyCode || event.which;
+    if (code === 13) {
+      createNewRoom();
+    }
+  };
+
+  const handleRoomCodeKeyDown = (event: any): void => {
+    var code = event.keyCode || event.which;
+    if (code === 13) {
+      enterRoom();
+    }
+  };
+
   return (
     <Container>
-      <Title>deCODE</Title>
-      <Label>Welcome to deCODE!</Label>
+      <Title>deCODES</Title>
+      <Label>Welcome to deCODES!</Label>
+      <Text>A minimalist version of the game designed with streamers in mind</Text>
+      <Text topMargin={true}>Let's start with a name...</Text>
       <ToolTip>
         {nameError !== '' && <ToolTipText>{nameError}</ToolTipText>}
         <Entry
           type="text"
           placeholder="Enter Player Name"
           toUpperCase={false}
-          maxLength={30}
+          maxLength={20}
           value={playerName}
           onInput={(e) => updatePlayerName((e.target as HTMLInputElement).value)}
+          onKeyPress={handlePlayerNameKeyDown}
           isError={nameError !== ''}
         />
       </ToolTip>
-      <Label>then</Label>
+      <Text>and then</Text>
+      <Button onClick={createNewRoom}>Create a Room</Button>
+      <Text>or join some friends</Text>
       <ButtonContainer>
         {roomCode !== '' && (
           <HideButton onClick={() => setHideCode(!hideCode)} src={hideCode ? showIcon : hideIcon} />
@@ -76,19 +97,24 @@ const RoomSelection = (props: Props) => {
         <ToolTip>
           {codeError !== '' && <ToolTipText>{codeError}</ToolTipText>}
           <Entry
-            type={hideCode ? 'password' : 'text'}
+            type="text"
             placeholder="Enter Room Code"
+            hideText={hideCode}
             toUpperCase={true}
             maxLength={6}
             value={roomCode}
             onInput={(e) => updateRoomCode((e.target as HTMLInputElement).value)}
+            onKeyPress={handleRoomCodeKeyDown}
             isError={codeError !== ''}
           />
         </ToolTip>
       </ButtonContainer>
       <Button onClick={enterRoom}>Join Room</Button>
-      <Label>- or -</Label>
-      <Button onClick={createNewRoom}>Create a Room</Button>
+      {props.error !== '' && (
+        <Text topMargin={true} isError={true}>
+          {props.error}
+        </Text>
+      )}
     </Container>
   );
 };

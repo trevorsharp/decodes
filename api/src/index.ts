@@ -6,7 +6,7 @@ import GameService from './services/GameService';
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://192.168.40.17:3000',
+    origin: 'http://sharp.casa:3000',
     methods: ['GET', 'POST'],
   },
 });
@@ -16,11 +16,11 @@ io.on('connection', (socket: Socket) => {
   var playerId: string;
 
   const handleError = (error: string) => {
+    if (roomCode) {
+      io.to(socket.id).emit('error', error);
+    }
     if (error !== '') {
       console.log('ERROR -', error);
-      if (roomCode) {
-        io.to(roomCode).emit('error', error);
-      }
       return false;
     }
     return true;
@@ -78,9 +78,9 @@ io.on('connection', (socket: Socket) => {
     handleRoomStateChange(await RoomService.switchTeam(roomCode, playerId));
   });
 
-  socket.on('toggleLeader', async () => {
-    console.log('toggleLeader', playerId);
-    handleRoomStateChange(await RoomService.toggleLeader(roomCode, playerId));
+  socket.on('toggleGuesser', async () => {
+    console.log('toggleGuesser', playerId);
+    handleRoomStateChange(await RoomService.toggleGuesser(roomCode, playerId));
   });
 
   socket.on('selectWord', async (data) => {

@@ -19,7 +19,7 @@ const RoomSchema = new Database.Schema({
           enum: [0, 1],
           required: true,
         },
-        leader: { type: Boolean, required: true },
+        guesser: { type: Boolean, required: true },
       },
     ],
     validate: [(arr: any[]) => arr.length <= 20, '{PATH} exceeds limit of 20 items'],

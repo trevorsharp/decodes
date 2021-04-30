@@ -1,11 +1,13 @@
 import styled from 'styled-components';
+import { Button } from '../App/App.styles';
 
 const width = 200;
+const alertRed = '#eb2f2f';
 
 const Container = styled.div`
-  width: 350px;
-  margin: auto;
-  margin-top 50px;
+  width: ${width + 70}px;
+  margin: 10vh auto;
+  position: static;
 `;
 
 const ButtonContainer = styled.div`
@@ -14,26 +16,13 @@ const ButtonContainer = styled.div`
   margin: auto;
 `;
 
-const Button = styled.button`
+const NewButton = styled(Button)`
   width: ${width}px;
-  border: solid 1.5px;
-  border-radius: 6px;
-  padding: 10px 15px;
-  background-color: transparent;
-  cursor: pointer;
-  margin: auto;
-  display: block;
-  vertical-align: text-bottom;
-  font-size: 15px;
-  font-weight: 500;
-  user-select: none;
+  margin-left: auto;
+  margin-right: auto;
 
-  :hover {
-    background-color: #eee;
-  }
-
-  :active {
-    background-color: #ddd;
+  @media (max-width: 500px) {
+    font-size: 15px;
   }
 `;
 
@@ -51,15 +40,27 @@ const Label = styled.h2`
   user-select: none;
 `;
 
-const Entry = styled.input<{ toUpperCase: boolean; isError: boolean }>`
+const Text = styled.p<{ topMargin?: boolean; isError?: boolean }>`
+  text-align: center;
+  font-weight: 400;
+  font-size: 18px;
+  user-select: none;
+  margin-top: ${(props) => (props.topMargin ? '40px' : '20px')};
+  color: ${(props) => (props.isError ? alertRed : 'inherit')};
+`;
+
+const Entry = styled.input<{ toUpperCase: boolean; isError: boolean; hideText?: boolean }>`
   width: ${width - 3}px;
   height: 37px;
   text-align: center;
-  font-weight: 400;
+  ${(props) => (props.hideText ? '-webkit-text-security: disc;' : '-webkit-text-security: none;')}
+  font-weight: 500;
   font-size: 15px;
-  border-radius: 6px;
-  border: solid 1.5px ${(props) => (props.isError ? 'red' : '')};
-  background-color: transparent;
+  border: solid 2px ${(props) => (props.isError ? alertRed : '#f9f9f9')};
+  border-style: solid;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #333;
   margin: auto;
   display: block;
   padding: 0;
@@ -71,7 +72,7 @@ const Entry = styled.input<{ toUpperCase: boolean; isError: boolean }>`
   }
 
   ::placeholder {
-    font-weight: 200;
+    font-weight: 400;
     text-transform: none;
     user-select: none;
   }
@@ -100,8 +101,8 @@ const ToolTip = styled.span`
 
 const ToolTipText = styled.span`
   visibility: hidden;
-  background-color: black;
-  color: #fff;
+  background-color: #e9e9e9;
+  color: #333;
   text-align: center;
   padding: 7px 15px;
   border-radius: 6px;
@@ -122,14 +123,15 @@ const ToolTipText = styled.span`
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: black transparent transparent transparent;
+    border-color: #e9e9e9 transparent transparent transparent;
   }
 `;
 
 export {
-  Button,
+  NewButton as Button,
   Title,
   Label,
+  Text,
   Entry,
   Container,
   HideButton,

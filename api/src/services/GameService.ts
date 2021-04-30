@@ -13,10 +13,10 @@ class GameService {
       roomCode = RoomService.cleanCode(roomCode);
       const room = await RoomService.getRoom(roomCode);
       if (room === null) {
-        return `Room with code '${roomCode}' does not exist`;
+        return `No room exists with that code`;
       }
 
-      const error = await RoomService.resetLeaders(roomCode);
+      const error = await RoomService.resetGuessers(roomCode);
       if (error !== '') {
         return error;
       }
@@ -47,7 +47,7 @@ class GameService {
       roomCode = RoomService.cleanCode(roomCode);
       const game = await GameService.getGame(roomCode);
       if (game === null) {
-        return `Game for room with code '${roomCode}' does not exist`;
+        return `Game for room does not exist`;
       }
 
       if (index >= game.wordList.length || index < 0) {
@@ -76,7 +76,7 @@ class GameService {
       roomCode = RoomService.cleanCode(roomCode);
       const game = await GameService.getGame(roomCode);
       if (game === null) {
-        return `Game for room with code '${roomCode}' does not exist`;
+        return `Game for room does not exist`;
       }
 
       game.activeTeam = game.activeTeam === Team.Red ? Team.Blue : Team.Red;

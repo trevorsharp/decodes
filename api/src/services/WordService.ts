@@ -409,7 +409,11 @@ class WordService {
   static getWordList = (startingTeam: Team): Word[] => {
     var list = WordService.shuffleArray(WordService.list)
       .slice(0, 25)
-      .map((word) => ({ value: word, assignment: WordAssignment.Neutral, selected: false }));
+      .map((word) => ({
+        value: WordService.toTitleCase(word),
+        assignment: WordAssignment.Neutral,
+        selected: false,
+      }));
 
     var assignments = [WordAssignment.Bomb];
     for (let i = 0; i < 9; i++) {
@@ -435,6 +439,13 @@ class WordService {
     }
     return newArray;
   };
+
+  private static toTitleCase = (word: string): string =>
+    word
+      .toLowerCase()
+      .split(' ')
+      .map((part) => part.replace(part[0], part[0].toUpperCase()))
+      .join(' ');
 }
 
 export default WordService;

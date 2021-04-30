@@ -4,7 +4,7 @@ interface Player {
   id: string;
   name: string;
   team: Team;
-  leader: boolean;
+  guesser: boolean;
 }
 
 export default Player;

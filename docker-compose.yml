@@ -1,36 +1,36 @@
 version: "3"
 services:
-   decode-api:
-     build:
-       context: ./api
-     image: trevorsharp/decode-api
-     container_name: decode-api
-     expose:
-       - "3000"
-     environment:
-       - "MONGODB_SERVER=decode-mongodb"
-       - "MONGODB_DATABASE=decode1"
-   decode-nginx:
-     build:
-       context: ./ui
-     image: trevorsharp/decode-nginx
-     container_name: decode-nginx
-     ports:
-       - 7171:7171
-  decode-mongodb:
+  decodes-api:
+    build:
+      context: ./api
+    image: trevorsharp/decodes-api
+    container_name: decodes-api
+    expose:
+      - "3000"
+    environment:
+      - "MONGODB_SERVER=decodes-mongodb"
+      - "MONGODB_DATABASE=decodes1"
+  decodes-nginx:
+    build:
+      context: ./ui
+    image: trevorsharp/decodes-nginx
+    container_name: decodes-nginx
+    ports:
+      - 7171:7171
+  decodes-mongodb:
     image: mongo
-    container_name: decode-mongodb
+    container_name: decodes-mongodb
     volumes:
       - /database:/data/db
     ports:
       - 27017:27017
     restart: unless-stopped
-  decode-mongodb-ui:
+  decodes-mongodb-ui:
     image: mongo-express
-    container_name: decode-mongodb-ui
+    container_name: decodes-mongodb-ui
     ports:
       - 8081:8081
     environment:
-      - "ME_CONFIG_MONGODB_SERVER=decode-mongodb"
+      - "ME_CONFIG_MONGODB_SERVER=decodes-mongodb"
       - "ME_CONFIG_BASICAUTH_USERNAME=sharp"
       - "ME_CONFIG_BASICAUTH_PASSWORD=password"

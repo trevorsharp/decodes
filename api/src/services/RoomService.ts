@@ -9,10 +9,7 @@ class RoomService {
   };
 
   private static cleanPlayerName = (name: string) => {
-    return name
-      .replace(/[^a-zA-Z0-9\s]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
+    return name.replace(/\s+/g, ' ').trim();
   };
 
   static getRoom = async (roomCode: string) => {
@@ -24,7 +21,7 @@ class RoomService {
       roomCode = RoomService.cleanCode(roomCode);
       const room = await RoomService.getRoom(roomCode);
       if (room !== null) {
-        return `Room with code '${roomCode}' already exists`;
+        return `Room with code already exists`;
       }
 
       const newRoom = new RoomModel({ code: roomCode, players: [] });
@@ -32,7 +29,7 @@ class RoomService {
 
       return await GameService.createGame(roomCode);
     } catch (err) {
-      return `Failed to create room with code ${roomCode} - ${err.message}`;
+      return `Failed to create room - ${err.message}`;
     }
   };
 
@@ -49,15 +46,15 @@ class RoomService {
       var room = await RoomService.getRoom(roomCode);
       if (room === null) {
         if (!shouldCreateNewRoom) {
-          return `Room with code '${roomCode}' does not exist`;
+          return `The code you've entered does not match any active rooms`;
         }
         const error = await RoomService.createRoom(roomCode);
         if (error !== '') return error;
-      }
 
-      room = await RoomService.getRoom(roomCode);
-      if (room === null) {
-        return `Room with code '${roomCode}' does not exist`;
+        room = await RoomService.getRoom(roomCode);
+        if (room === null) {
+          return `Failed to create new room`;
+        }
       }
 
       if (room.players.find((x) => x.id === playerId)) {
@@ -65,7 +62,7 @@ class RoomService {
       }
 
       if (room.players.find((x) => x.name.toLowerCase() === name.toLowerCase())) {
-        return `Player with same name is already added to the room`;
+        return `A player with the same name is already added to the room`;
       }
 
       const teamAssignment =
@@ -74,7 +71,7 @@ class RoomService {
           ? Team.Blue
           : Team.Red;
 
-      const newPlayer: Player = { id: playerId, name, team: teamAssignment, leader: false };
+      const newPlayer: Player = { id: playerId, name, team: teamAssignment, guesser: true };
       room.players.push(newPlayer);
       await RoomModel.updateOne({ code: roomCode }, room, { runValidators: true });
     } catch (err) {
@@ -89,7 +86,7 @@ class RoomService {
       roomCode = RoomService.cleanCode(roomCode);
       const room = await RoomService.getRoom(roomCode);
       if (room === null) {
-        return `Room with code '${roomCode}' does not exist`;
+        return `No room exists with that code`;
       }
 
       room.players = room.players.filter((x) => x.id !== playerId);
@@ -113,7 +110,7 @@ class RoomService {
       roomCode = RoomService.cleanCode(roomCode);
       const room = await RoomService.getRoom(roomCode);
       if (room === null) {
-        return `Room with code '${roomCode}' does not exist`;
+        return `No room exists with that code`;
       }
 
       if (!room.players.find((x) => x.id === playerId)) {
@@ -130,12 +127,12 @@ class RoomService {
     return '';
   };
 
-  static toggleLeader = async (roomCode: string, playerId: string) => {
+  static toggleGuesser = async (roomCode: string, playerId: string) => {
     try {
       roomCode = RoomService.cleanCode(roomCode);
       const room = await RoomService.getRoom(roomCode);
       if (room === null) {
-        return `Room with code '${roomCode}' does not exist`;
+        return `No room exists with that code`;
       }
 
       if (!room.players.find((x) => x.id === playerId)) {
@@ -143,27 +140,27 @@ class RoomService {
       }
 
       const index = room.players.findIndex((x) => x.id === playerId);
-      room.players[index].leader = !room.players[index].leader;
+      room.players[index].guesser = !room.players[index].guesser;
       await RoomModel.updateOne({ code: roomCode }, room), { runValidators: true };
     } catch (err) {
-      return `Failed to toggle player as a leader - ${err.message}`;
+      return `Failed to toggle player as a guesser - ${err.message}`;
     }
 
     return '';
   };
 
-  static resetLeaders = async (roomCode: string) => {
+  static resetGuessers = async (roomCode: string) => {
     try {
       roomCode = RoomService.cleanCode(roomCode);
       const room = await RoomService.getRoom(roomCode);
       if (room === null) {
-        return `Room with code '${roomCode}' does not exist`;
+        return `No room exists with that code`;
       }
 
-      room.players.forEach((player) => (player.leader = false));
+      room.players.forEach((player) => (player.guesser = true));
       await RoomModel.updateOne({ code: roomCode }, room), { runValidators: true };
     } catch (err) {
-      return `Failed to reset all player's leader status - ${err.message}`;
+      return `Failed to reset all player's guesser status - ${err.message}`;
     }
 
     return '';
