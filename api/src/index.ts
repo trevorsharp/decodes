@@ -4,7 +4,12 @@ import RoomService from './services/RoomService';
 import GameService from './services/GameService';
 
 const httpServer = createServer();
-const io = new Server(httpServer, { path: '/api' });
+const io = new Server(httpServer, {
+  cors: {
+    origin: 'https://decodes.stream',
+    methods: ['GET', 'POST'],
+  },
+});
 
 io.on('connection', (socket: Socket) => {
   var roomCode: string;
