@@ -1,8 +1,6 @@
 version: "3"
 services:
   decodes-api:
-    build:
-      context: ./api
     image: trevorsharp/decodes-api
     container_name: decodes-api
     expose:
@@ -12,8 +10,6 @@ services:
       - "MONGODB_DATABASE=decodes1"
       - "FRONTEND_URL=https://decodes.stream"
   decodes-nginx:
-    build:
-      context: ./ui
     image: trevorsharp/decodes-nginx
     container_name: decodes-nginx
     ports:
