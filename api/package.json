@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
-    "@types/mongoose": "^5.10.5",
     "mongoose": "^5.12.6",
     "socket.io": "^4.0.1"
   },

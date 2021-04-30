@@ -13,13 +13,12 @@ services:
     image: trevorsharp/decodes-nginx
     container_name: decodes-nginx
     ports:
-      - 80:80
       - 443:443
     environment:
       - "DOMAIN=decodes.stream"
       - "BACKEND_SERVER=decodes-api"
       - "MONGO_EXPRESS=decodes-mongodb-ui"
-    command: /bin/bash -c "export DOLLAR='$'; envsubst < /app/host.conf > /hosts/host.conf && nginx -g 'daemon off;'"
+    command: /bin/bash -c "export DOLLAR='$$'; envsubst < /app/host.conf > /hosts/host.conf && nginx -g 'daemon off;'"
   decodes-mongodb:
     image: mongo
     container_name: decodes-mongodb
