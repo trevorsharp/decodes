@@ -15,9 +15,5 @@ RUN yarn build
 
 
 FROM nginx:alpine
-
 ADD ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/build /static/app
-
-WORKDIR /app
-COPY ./nginx/host.conf ./host.conf
