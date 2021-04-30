@@ -1,7 +1,8 @@
 import { io } from 'socket.io-client';
 
-const socket = io(`${window.location.href.replace(window.location.pathname, '')}`, {
+const socket = io('', {
   path: '/api',
+  secure: true,
 });
 
 const playerId = `${Math.floor(Math.random() * 1000000000)}`;

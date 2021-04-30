@@ -4,13 +4,7 @@ import RoomService from './services/RoomService';
 import GameService from './services/GameService';
 
 const httpServer = createServer();
-const io = new Server(httpServer, {
-  path: '/api',
-  cors: {
-    origin: `${process.env.FRONTEND_URL}`,
-    methods: ['GET', 'POST'],
-  },
-});
+const io = new Server(httpServer, { path: '/api' });
 
 io.on('connection', (socket: Socket) => {
   var roomCode: string;

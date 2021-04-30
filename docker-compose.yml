@@ -8,7 +8,6 @@ services:
     environment:
       - "MONGODB_SERVER=decodes-mongodb"
       - "MONGODB_DATABASE=decodes1"
-      - "FRONTEND_URL=https://decodes.stream"
   decodes-nginx:
     image: trevorsharp/decodes-nginx
     container_name: decodes-nginx
