@@ -17,3 +17,6 @@ config/development.json
 config/production.json
 test/
 build/
+database/
+hosts/
+ssl/

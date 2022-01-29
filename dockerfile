@@ -1,4 +1,4 @@
-FROM node:14.16.0-alpine as builder
+FROM node:16-alpine as builder
 
 RUN apk add --no-cache yarn
 
@@ -15,6 +15,7 @@ RUN yarn build
 
 
 FROM nginx:alpine
+COPY ./nginx/host.conf /etc/nginx/host.conf
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx/mime.types /etc/nginx/mime.types
 COPY --from=builder /app/build /static/app

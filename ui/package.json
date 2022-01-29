@@ -9,14 +9,14 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
-    "react-scripts": "4.0.3",
+    "react-scripts": "5.0.0",
     "redux": "^4.1.0",
     "socket.io-client": "^4.0.1",
     "styled-components": "^5.2.3",
     "typescript": "^4.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "rm -rf ./build && react-scripts build"
   },
   "eslintConfig": {
